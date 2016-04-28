@@ -1,3 +1,17 @@
+/*
+CRUD meter
+Arduino firmware for basic measurements
+
+    CRUD is free software, and you are welcome to redistribute it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This software comes with ABSOLUTELY NO WARRANTY; see gpl.html for
+    details. If you haven't received a copy of the GNU General Public
+    License along with this program, see http://www.gnu.org/licenses/
+
+Copyright 2016 Dmitry Grigoryev
+*/
 
 // Configuration parameters
 const int PIN_IN =   A0;
@@ -31,46 +45,6 @@ void setup() {
   pinMode(PIN_10K, INPUT);
   pinMode(PIN_100K, INPUT);
   pinMode(PIN_1M, INPUT);
-}
-
-int meas_490Hz_step(byte pin) {
-  int i, j, v, vmin, vmax, result;
-  pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);
-  for(i = 0; i < 10000; i++) {
-    v = analogRead(PIN_IN);
-    if(v > 511) break;
-  }
-  digitalWrite(pin, LOW);
-  for(i = 0; i < 10000; i++) {
-    v = analogRead(PIN_IN);
-    if(v < 512) break;
-  }
-  analogWrite(pin, 127);
-  delay(100);
-  result = 0;
-  for(i = 0; i < 32; i++) {
-    vmin = 1023; vmax = 0;
-    for(j = 0; j < 25; j++) {
-      v = analogRead(PIN_IN);
-      vmin = min(vmin, v);
-      vmax = max(vmax, v);
-    }
-    result += vmax - vmin;
-  }
-  pinMode(pin, INPUT);
-  return result >> 5;
-}
-
-float meas_490Hz() {
-  int value;
-  value = meas_490Hz_step(PIN_1K);
-  if(value < 200) return 600000.0 / value;
-  value = meas_490Hz_step(PIN_10K);
-  if(value < 200) return 60000.0 / value;
-  value = meas_490Hz_step(PIN_100K);
-  if(value < 200) return 6000.0 / value;
-  else return 0.0;
 }
 
 long meas_C_step(byte pin) {
@@ -166,6 +140,4 @@ void loop() {
     }
   }
 }
-
-
 

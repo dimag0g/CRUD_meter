@@ -48,10 +48,10 @@ Measure the exact values of the resistors you're about to use (preferably
 before soldering if you're going to solder them), and set the calibration
 constants to the exact value you have used:
 
-REF_1K   - to the actual resistance of 1kOhm resistor
-REF_10K  - to the actual resistance of 10kOhm resistor
-REF_100K - to the actual resistance of 100kOhm resistor
-REF_1M   - to the actual resistance of 1MOhm resistor
+- REF_1K   - to the actual resistance of 1kOhm resistor
+- REF_10K  - to the actual resistance of 10kOhm resistor
+- REF_100K - to the actual resistance of 100kOhm resistor
+- REF_1M   - to the actual resistance of 1MOhm resistor
 
 You will also need to measure the exact voltage on Arduino's VCC pin
 and assign that value to the calibration constant REF_V.
